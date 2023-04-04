@@ -1,10 +1,10 @@
 {
   "name": "real-car-worth",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
-  "license": "UNLICENSED",
+  "description": "A REST API written using NestJS that helps users determine the real worth of their used cars by recording the purchases and sales of those cars.",
+  "author": "anthony2v",
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
