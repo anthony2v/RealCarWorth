@@ -1,4 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { CreateUserDTO } from './dtos/create-user.dto';
 
 @Controller('auth')
 export class UsersController {
@@ -6,7 +7,9 @@ export class UsersController {
      * Create a new user and sign in
      */
     @Post('/signup')
-    createUser(@Body() body: { email: string, password: string }) {}
+    createUser(@Body() body: CreateUserDTO) {
+        console.log(body);
+    }
 
     /**
      * Sign in as an existing user
