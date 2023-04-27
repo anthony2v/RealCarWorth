@@ -12,4 +12,12 @@ export class UsersService {
         const user: UserEntity = this.repository.create({ email, password });
         return this.repository.save(user);
     }
+
+    public find(email: string): Promise<UserEntity[]> {
+        return this.repository.find({ where: { email } });
+    }
+
+    public findOne(id: number): Promise<UserEntity | null> {
+        return this.repository.findOneBy({ id });
+    }
 }
