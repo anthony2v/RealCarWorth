@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UserEntity } from './user.entity';
@@ -37,6 +37,10 @@ export class UsersController {
    * Find all users with the given email
    * NOTE: Not needed for the production app, it is for understanding TypeORM
    */
+  @Get()
+  findAllUsers(@Query('email') email: string): Promise<UserEntity[]> {
+    return this.usersService.find(email);
+  }
 
   /**
    * Update a user with the given id
