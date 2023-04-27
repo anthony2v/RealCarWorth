@@ -24,8 +24,7 @@ export class UsersService {
     public async update(id: number, attributes: Partial<UserEntity>): Promise<UserEntity> {
         const userEntity: UserEntity | null = await this.findOne(id);
         if (!userEntity)
-            throw new BadRequestException("User not found");
-
+            throw new BadRequestException('User not found');
         Object.assign(userEntity, attributes);
         return this.repository.save(userEntity);
     }
@@ -33,8 +32,7 @@ export class UsersService {
     public async remove(id: number): Promise<UserEntity> {
         const userEntity: UserEntity | null = await this.findOne(id);
         if (!userEntity)
-            throw new BadRequestException("User not found");
-            
+            throw new BadRequestException('User not found');
         return this.repository.remove(userEntity);
     }
 }
