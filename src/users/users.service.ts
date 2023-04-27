@@ -8,6 +8,7 @@ export class UsersService {
     constructor(@InjectRepository(UserEntity) private readonly repository: Repository<UserEntity>) {}
 
     public create(email: string, password: string): Promise<UserEntity> {
+        // we create a UserEntity instance here to facilitate typeorm logging hooks
         const user: UserEntity = this.repository.create({ email, password });
         return this.repository.save(user);
     }
