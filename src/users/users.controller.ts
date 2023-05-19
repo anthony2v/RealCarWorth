@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -38,11 +37,8 @@ export class UsersController {
    * NOTE: Not needed for the production app, it is for understanding TypeORM
    */
   @Get('/:id')
-  async findUser(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
-    const userEntity: UserEntity | null = await this.usersService.findOne(id);
-    if (!userEntity)
-      throw new BadRequestException('User not found');
-    return userEntity;
+  findUser(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
+    return this.usersService.throwOrFindOne(id);
   }
 
   /**

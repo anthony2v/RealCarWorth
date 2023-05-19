@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
@@ -17,22 +17,21 @@ export class UsersService {
         return this.repository.find({ where: { email } });
     }
 
-    public findOne(id: number): Promise<UserEntity | null> {
-        return this.repository.findOneBy({ id });
+    public async throwOrFindOne(id: number): Promise<UserEntity> {
+        const userEntity: UserEntity | null = await this.repository.findOneBy({ id });
+        if (!userEntity)
+            throw new NotFoundException('User not found');
+        return userEntity;
     }
 
     public async update(id: number, attributes: Partial<UserEntity>): Promise<UserEntity> {
-        const userEntity: UserEntity | null = await this.findOne(id);
-        if (!userEntity)
-            throw new BadRequestException('User not found');
+        const userEntity: UserEntity = await this.throwOrFindOne(id);
         Object.assign(userEntity, attributes);
         return this.repository.save(userEntity);
     }
 
     public async remove(id: number): Promise<UserEntity> {
-        const userEntity: UserEntity | null = await this.findOne(id);
-        if (!userEntity)
-            throw new BadRequestException('User not found');
+        const userEntity: UserEntity = await this.throwOrFindOne(id);
         return this.repository.remove(userEntity);
     }
 }
