@@ -1,7 +1,19 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query
+} from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UserEntity } from './user.entity';
+import { UpdateUserDTO } from './dtos/update-user.dto';
 
 @Controller('auth')
 export class UsersController {
@@ -46,6 +58,11 @@ export class UsersController {
    * Update a user with the given id
    * NOTE: Not needed for the production app, it is for understanding TypeORM
    */
+  @Patch('/:id')
+  updateUser(@Param('id', ParseIntPipe) id: number,
+             @Body() body: UpdateUserDTO): Promise<UserEntity> {
+    return this.usersService.update(id, body);
+  }
 
   /**
    * Delete a user with the given id
