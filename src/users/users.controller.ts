@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UserEntity } from './user.entity';
@@ -51,4 +51,8 @@ export class UsersController {
    * Delete a user with the given id
    * NOTE: Not needed for the production app, it is for understanding TypeORM
    */
+  @Delete('/:id')
+  removeUser(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
+    return this.usersService.remove(id);
+  }
 }
