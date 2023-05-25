@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
-import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
+import { SerializeInterceptor } from '../interceptors/serialize.interceptor';
 import { UsersService } from './users.service';
 import { UserEntity } from './user.entity';
 import { UpdateUserDTO } from './dtos/update-user.dto';
