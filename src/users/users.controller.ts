@@ -9,7 +9,7 @@ import {
   Patch,
   Post,
   Query,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
@@ -58,8 +58,10 @@ export class UsersController {
    * NOTE: Not needed for the production app, it is for understanding TypeORM
    */
   @Patch('/:id')
-  updateUser(@Param('id', ParseIntPipe) id: number,
-             @Body() body: UpdateUserDTO): Promise<UserEntity> {
+  updateUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: UpdateUserDTO,
+  ): Promise<UserEntity> {
     return this.usersService.update(id, body);
   }
 
