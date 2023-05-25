@@ -16,7 +16,6 @@ import { UsersService } from './users.service';
 import { UserEntity } from './user.entity';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 
-@UseInterceptors(SerializeInterceptor)
 @Controller('auth')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -39,6 +38,7 @@ export class UsersController {
    * Find a user with a given id
    * NOTE: Not needed for the production app, it is for understanding TypeORM
    */
+  @UseInterceptors(SerializeInterceptor)
   @Get('/:id')
   findUser(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
     return this.usersService.throwOrFindOne(id);
