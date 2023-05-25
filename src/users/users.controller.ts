@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  ParseIntPipe,
-  Patch,
-  Post,
-  Query,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UserEntity } from './user.entity';
@@ -18,6 +7,7 @@ import { UsersService } from './users.service';
 import { Serialize } from '../interceptors/serialize.interceptor';
 
 @Controller('auth')
+@Serialize(UserDTO)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -39,7 +29,6 @@ export class UsersController {
    * Find a user with a given id
    * NOTE: Not needed for the production app, it is for understanding TypeORM
    */
-  @Serialize(UserDTO)
   @Get('/:id')
   findUser(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
     return this.usersService.throwOrFindOne(id);

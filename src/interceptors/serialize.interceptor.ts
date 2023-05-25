@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
 
-export function Serialize(DTO: any): MethodDecorator {
+export function Serialize(DTO: any) {
   return UseInterceptors(new SerializeInterceptor(DTO));
 }
 
