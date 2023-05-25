@@ -1,6 +1,5 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -12,10 +11,12 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
+import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
 import { UsersService } from './users.service';
 import { UserEntity } from './user.entity';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 
+@UseInterceptors(SerializeInterceptor)
 @Controller('auth')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -38,7 +39,6 @@ export class UsersController {
    * Find a user with a given id
    * NOTE: Not needed for the production app, it is for understanding TypeORM
    */
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get('/:id')
   findUser(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
     return this.usersService.throwOrFindOne(id);
